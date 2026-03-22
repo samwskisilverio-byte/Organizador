@@ -124,8 +124,12 @@ textarea {
 
 .sidebar h1,
 .hero-card h2,
+.portal-card h4,
+.notes-sidebar-header h4,
+.notes-workspace-header h4,
+.subject-notes-header h4,
 .panel h3 {
-  font-family: "Fraunces", serif;
+  font-family: "Bell MT", "Times New Roman", serif;
   line-height: 1;
   margin: 0;
 }
@@ -296,7 +300,6 @@ textarea {
 .portal-card h4 {
   margin: 0.35rem 0 0.55rem;
   font-size: 1.35rem;
-  font-family: "Fraunces", serif;
 }
 
 .portal-card p {

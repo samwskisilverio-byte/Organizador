@@ -203,7 +203,7 @@ attachEvents();
 
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = readStoredState();
     if (!raw) {
       return structuredClone(defaultState);
     }
@@ -220,7 +220,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  writeStoredState(JSON.stringify(state));
   updateSummary();
 }
 
@@ -511,6 +511,13 @@ function attachEvents() {
       resizeMapSketchCanvas();
       loadMapSketch();
     }
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (canvas) {
+      saveCanvasForCurrentMonth();
+    }
+    saveState();
   });
 }
 
@@ -1644,6 +1651,51 @@ function formatDateLong(dateString) {
 
 function sanitizeText(value) {
   return value || "Sem registro";
+}
+
+function readStoredState() {
+  try {
+    const localValue = localStorage.getItem(STORAGE_KEY);
+    if (localValue) {
+      return localValue;
+    }
+  } catch (error) {
+    console.warn("Nao foi possivel ler localStorage.", error);
+  }
+
+  return readWindowNameState();
+}
+
+function writeStoredState(value) {
+  try {
+    localStorage.setItem(STORAGE_KEY, value);
+  } catch (error) {
+    console.warn("Nao foi possivel gravar no localStorage.", error);
+  }
+
+  writeWindowNameState(value);
+}
+
+function readWindowNameState() {
+  try {
+    if (!window.name) {
+      return "";
+    }
+    const parsed = JSON.parse(window.name);
+    return parsed?.[STORAGE_KEY] || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function writeWindowNameState(value) {
+  try {
+    const parsed = window.name ? JSON.parse(window.name) : {};
+    parsed[STORAGE_KEY] = value;
+    window.name = JSON.stringify(parsed);
+  } catch (error) {
+    window.name = JSON.stringify({ [STORAGE_KEY]: value });
+  }
 }
 
 function escapeHtml(value) {
