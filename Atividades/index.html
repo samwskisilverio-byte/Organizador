@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stude! | Atividades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Area dedicada</p>
+          <h1>Atividades</h1>
+          <p class="sidebar-copy">Quadro para distribuir blocos de estudo e vida em um fluxo visual.</p>
+        </div>
+        <nav class="section-nav" aria-label="Navegacao do site">
+          <a href="../index.html">Inicio</a>
+          <a href="../Calendario/index.html">Calendario</a>
+          <a href="../Diario/index.html">Diario</a>
+          <a href="../Biblioteca de Feynman/index.html">Feynman</a>
+          <a href="../Biblioteca de anotações/index.html">Biblioteca</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section class="welcome-banner">
+          <p>Blocos arrastaveis para o que precisa de foco, andamento e conclusao.</p>
+        </section>
+
+        <section id="activities" class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Atividades em blocos</p>
+              <h3>Monte seu fluxo com blocos arrastaveis.</h3>
+            </div>
+            <form id="taskForm" class="task-form">
+              <input id="taskTitle" type="text" placeholder="Nova atividade" required />
+              <select id="taskColumn">
+                <option value="focus">Foco</option>
+                <option value="progress">Em andamento</option>
+                <option value="done">Concluido</option>
+              </select>
+              <input id="taskTime" type="text" placeholder="Tempo ou horario" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <div class="board" id="taskBoard"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="taskColumnTemplate">
+      <section class="board-column">
+        <header>
+          <p class="column-title"></p>
+          <span class="column-count"></span>
+        </header>
+        <div class="task-list"></div>
+      </section>
+    </template>
+
+    <script src="../scripts/app.js"></script>
+  </body>
+</html>

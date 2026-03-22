@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stude! | Diario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Area dedicada</p>
+          <h1>Diario</h1>
+          <p class="sidebar-copy">Seu espaco para registrar progresso, rotina e tudo o que importa.</p>
+        </div>
+        <nav class="section-nav" aria-label="Navegacao do site">
+          <a href="../index.html">Inicio</a>
+          <a href="../Calendario/index.html">Calendario</a>
+          <a href="../Atividades/index.html">Atividades</a>
+          <a href="../Biblioteca de Feynman/index.html">Feynman</a>
+          <a href="../Biblioteca de anotações/index.html">Biblioteca</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section class="welcome-banner">
+          <p>Seu diario flexivel com topicos criaveis e entradas por data.</p>
+        </section>
+
+        <section id="journal" class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Diario</p>
+              <h3>Registre sua rotina inteira, sem censura.</h3>
+            </div>
+          </div>
+
+          <div class="journal-layout">
+            <form id="journalForm" class="journal-form">
+              <label>
+                Data
+                <input id="journalDate" type="date" required />
+              </label>
+              <div class="journal-builder">
+                <div class="journal-builder-header">
+                  <p>Topicos do diario</p>
+                  <div class="journal-topic-actions">
+                    <input id="journalFieldName" type="text" placeholder="Novo topico, ex.: vida devocional" />
+                    <button id="addJournalField" class="ghost-button" type="button">Criar topico</button>
+                  </div>
+                </div>
+                <div id="journalDynamicFields" class="journal-dynamic-fields"></div>
+              </div>
+              <button type="submit">Salvar entrada</button>
+            </form>
+
+            <div id="journalEntries" class="journal-entries"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../scripts/app.js"></script>
+  </body>
+</html>

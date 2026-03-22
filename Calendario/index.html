@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stude! | Calendario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Area dedicada</p>
+          <h1>Calendario</h1>
+          <p class="sidebar-copy">Seu painel mensal para planejar, desenhar e marcar o ritmo dos estudos.</p>
+        </div>
+        <nav class="section-nav" aria-label="Navegacao do site">
+          <a href="../index.html">Inicio</a>
+          <a href="../Atividades/index.html">Atividades</a>
+          <a href="../Diario/index.html">Diario</a>
+          <a href="../Biblioteca de Feynman/index.html">Feynman</a>
+          <a href="../Biblioteca de anotações/index.html">Biblioteca</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section class="welcome-banner">
+          <p>Calendario livre para organizar o mes com rabiscos e texto.</p>
+        </section>
+
+        <section id="calendar" class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Calendario rabiscavel</p>
+              <h3>Planeje o mes e desenhe por cima dele.</h3>
+            </div>
+            <div class="month-controls">
+              <button id="prevMonth" class="ghost-button" type="button">Mes anterior</button>
+              <strong id="calendarLabel"></strong>
+              <button id="nextMonth" class="ghost-button" type="button">Proximo mes</button>
+            </div>
+          </div>
+
+          <div class="calendar-layout">
+            <div class="calendar-surface">
+              <div id="calendarGrid" class="calendar-grid"></div>
+              <canvas id="calendarCanvas"></canvas>
+            </div>
+
+            <div class="toolbox">
+              <label>
+                Ferramenta
+                <select id="toolMode">
+                  <option value="pen">Caneta</option>
+                  <option value="eraser">Borracha</option>
+                  <option value="text">Texto</option>
+                </select>
+              </label>
+              <label>
+                Cor
+                <input id="toolColor" type="color" value="#f97316" />
+              </label>
+              <label>
+                Espessura
+                <input id="toolSize" type="range" min="2" max="24" value="4" />
+              </label>
+              <label>
+                Texto rapido
+                <input id="textStamp" type="text" placeholder="ex.: prova, foco, descanso" />
+              </label>
+              <div class="tool-actions">
+                <button id="saveCanvas" type="button">Salvar rabiscos</button>
+                <button id="clearCanvas" class="ghost-button" type="button">Limpar mes</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../scripts/app.js"></script>
+  </body>
+</html>

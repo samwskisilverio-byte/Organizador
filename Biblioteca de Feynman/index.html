@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stude! | Biblioteca de Feynman</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Area dedicada</p>
+          <h1>Feynman</h1>
+          <p class="sidebar-copy">Organize seus videos explicando materias e topicos com clareza.</p>
+        </div>
+        <nav class="section-nav" aria-label="Navegacao do site">
+          <a href="../index.html">Inicio</a>
+          <a href="../Calendario/index.html">Calendario</a>
+          <a href="../Atividades/index.html">Atividades</a>
+          <a href="../Diario/index.html">Diario</a>
+          <a href="../Biblioteca de anotações/index.html">Biblioteca</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section class="welcome-banner">
+          <p>Seu acervo de explicacoes pessoais para revisar e ensinar melhor.</p>
+        </section>
+
+        <section id="feynman" class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Sistema Feynman</p>
+              <h3>Organize videos seus ensinando a materia.</h3>
+            </div>
+            <form id="videoForm" class="video-form">
+              <input id="videoSubject" type="text" placeholder="Materia" required />
+              <input id="videoTopic" type="text" placeholder="Topico explicado" required />
+              <input id="videoLink" type="url" placeholder="Link do video" />
+              <input id="videoTags" type="text" placeholder="tags separadas por virgula" />
+              <button type="submit">Adicionar video</button>
+            </form>
+          </div>
+
+          <div class="video-toolbar">
+            <input id="videoSearch" type="search" placeholder="Buscar por materia, topico ou tag" />
+          </div>
+
+          <div id="videoLibrary" class="video-library"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../scripts/app.js"></script>
+  </body>
+</html>
