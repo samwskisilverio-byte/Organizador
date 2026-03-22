@@ -191,6 +191,7 @@ let mapSketchDrawing = false;
 let editingSubjectNoteId = null;
 let pendingConnectionSourceId = null;
 let resizingMapNode = null;
+const expandedNoteCategories = new Set(["humanas", "exatas", "outras"]);
 const DEFAULT_TOPIC_ID = "geral";
 const DEFAULT_MAP_WIDTH = 2800;
 const DEFAULT_MAP_HEIGHT = 1800;
@@ -335,7 +336,11 @@ function attachEvents() {
   if (ui.subjectTopicSelect) {
     ui.subjectTopicSelect.addEventListener("change", () => {
       const subjectState = getActiveSubjectState();
-    subjectState.activeTopicId = ui.subjectTopicSelect.value;
+    const nextTopicId = ui.subjectTopicSelect.value;
+    if (!subjectState.topics.some((topic) => topic.id === nextTopicId)) {
+      return;
+    }
+    subjectState.activeTopicId = nextTopicId;
     activeMapNodeId = null;
     pendingConnectionSourceId = null;
     renderLibrarySelectionView();
@@ -350,6 +355,13 @@ function attachEvents() {
       return;
     }
     const subjectState = getActiveSubjectState();
+    const alreadyExists = subjectState.topics.some(
+      (topic) => topic.name.trim().toLowerCase() === name.toLowerCase()
+    );
+    if (alreadyExists) {
+      ui.newTopicName.value = "";
+      return;
+    }
     const topicId = createTopicId(subjectState, name);
     subjectState.topics.push({
       id: topicId,
@@ -429,12 +441,18 @@ function attachEvents() {
 
   document.querySelectorAll(".notes-category-toggle").forEach((button) => {
     button.addEventListener("click", () => {
-      const list = button.nextElementSibling;
-      list?.classList.toggle("hidden");
-      const addBox = list?.nextElementSibling;
-      if (addBox?.classList.contains("notes-subject-add")) {
-        addBox.classList.toggle("hidden");
+      const category = button.dataset.category;
+      if (!category) {
+        return;
       }
+
+      if (expandedNoteCategories.has(category)) {
+        expandedNoteCategories.delete(category);
+      } else {
+        expandedNoteCategories.add(category);
+      }
+
+      renderLibrarySelectionView();
     });
   });
 
@@ -1014,6 +1032,25 @@ function renderSubjectCategory(category, container) {
   if (!container) {
     return;
   }
+
+  const wrapper = container.closest(".notes-category");
+  const addBox = wrapper?.querySelector(".notes-subject-add");
+  const toggleButton = wrapper?.querySelector(".notes-category-toggle");
+  const isExpanded = expandedNoteCategories.has(category);
+
+  if (wrapper) {
+    wrapper.classList.toggle("collapsed", !isExpanded);
+  }
+
+  if (toggleButton) {
+    toggleButton.setAttribute("aria-expanded", String(isExpanded));
+  }
+
+  container.classList.toggle("hidden", !isExpanded);
+  if (addBox) {
+    addBox.classList.toggle("hidden", !isExpanded);
+  }
+
   container.innerHTML = "";
   const subjects = getSubjectsForCategory(category);
 
@@ -1029,13 +1066,10 @@ function renderSubjectCategory(category, container) {
     button.textContent = subject;
     button.addEventListener("click", () => {
       state.noteLibrary.activeSubjectKey = key;
+      expandedNoteCategories.add(category);
       activeMapNodeId = null;
       pendingConnectionSourceId = null;
-      if (ui.mapPlane && ui.subjectNotesList) {
-        renderNotesLibrary();
-      } else {
-        renderOrganizerPage();
-      }
+      renderLibrarySelectionView();
       saveState();
     });
     container.appendChild(button);
