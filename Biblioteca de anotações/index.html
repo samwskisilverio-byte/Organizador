@@ -2,186 +2,42 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=../Mat%C3%A9ria%20e%20assunto/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stude! | Biblioteca de Anotacoes</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
-      rel="stylesheet"
-    />
+    <title>Stude! | Biblioteca</title>
     <link rel="stylesheet" href="../styles/style.css" />
   </head>
   <body>
     <div class="page-shell">
       <aside class="sidebar">
         <div>
-          <p class="eyebrow">Area dedicada</p>
+          <p class="eyebrow">Transicao</p>
           <h1>Biblioteca</h1>
-          <p class="sidebar-copy">Mapas, assuntos, notas e conexoes organizados por materia.</p>
+          <p class="sidebar-copy">
+            Agora a biblioteca foi dividida em duas salas: organizacao e mapa com anotacoes.
+          </p>
         </div>
-        <nav class="section-nav" aria-label="Navegacao do site">
-          <a href="../index.html">Inicio</a>
-          <a href="../Calendario/index.html">Calendario</a>
-          <a href="../Atividades/index.html">Atividades</a>
-          <a href="../Diario/index.html">Diario</a>
-          <a href="../Biblioteca de Feynman/index.html">Feynman</a>
-        </nav>
       </aside>
 
       <main class="content">
         <section class="welcome-banner">
-          <p>Biblioteca de anotacoes com materias, assuntos e mapas independentes.</p>
+          <p>Redirecionando para materia e assunto...</p>
         </section>
 
-        <section id="notes" class="panel">
+        <section class="panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Biblioteca de anotacoes</p>
-              <h3>Mapas e notas organizados por materia.</h3>
+              <p class="eyebrow">Novo fluxo</p>
+              <h3>Primeiro escolha. Depois mergulhe.</h3>
             </div>
           </div>
 
-          <div class="notes-layout">
-            <aside class="notes-sidebar">
-              <div class="notes-sidebar-card">
-                <div class="notes-sidebar-header">
-                  <div>
-                    <p class="eyebrow">Categorias</p>
-                    <h4>Biblioteca</h4>
-                  </div>
-                </div>
-
-                <div class="notes-category">
-                  <button class="notes-category-toggle" type="button" data-category="humanas">Humanas</button>
-                  <div class="notes-subject-list" id="humanasSubjects"></div>
-                </div>
-
-                <div class="notes-category">
-                  <button class="notes-category-toggle" type="button" data-category="exatas">Exatas</button>
-                  <div class="notes-subject-list" id="exatasSubjects"></div>
-                </div>
-
-                <div class="notes-category">
-                  <button class="notes-category-toggle" type="button" data-category="outras">Outras</button>
-                  <div class="notes-subject-list" id="outrasSubjects"></div>
-                  <div class="notes-subject-add">
-                    <input id="otherSubjectName" type="text" placeholder="Nova materia em outras" />
-                    <button id="addOtherSubject" class="ghost-button" type="button">Adicionar</button>
-                  </div>
-                </div>
-              </div>
-            </aside>
-
-            <div class="notes-workspace">
-              <div class="topic-bar">
-                <div>
-                  <p class="eyebrow">Assunto ativo</p>
-                  <strong id="activeTopicTitle">Geral</strong>
-                </div>
-                <div class="topic-actions">
-                  <select id="subjectTopicSelect"></select>
-                  <input id="newTopicName" type="text" placeholder="Novo assunto" />
-                  <button id="addSubjectTopic" class="ghost-button" type="button">Criar assunto</button>
-                  <button id="deleteSubjectTopic" class="ghost-button" type="button">Excluir assunto</button>
-                </div>
-              </div>
-
-              <div class="notes-workspace-header">
-                <div>
-                  <p class="eyebrow">Materia ativa</p>
-                  <h4 id="activeSubjectTitle">Historia</h4>
-                  <p id="activeSubjectMeta" class="workspace-meta">Humanas • mapa e anotacoes com ligacao automatica por nome</p>
-                </div>
-                <div class="node-creator">
-                  <input id="mapNodeTitle" type="text" placeholder="Titulo da caixa" />
-                  <input id="mapNodeColor" type="color" value="#fff7ed" />
-                  <button id="addMapNode" type="button">Criar caixa</button>
-                </div>
-              </div>
-
-              <div id="exactSketchTools" class="exact-sketch-tools">
-                <span id="noteMatchStatus" class="map-connection-status"></span>
-                <span id="mapConnectionStatus" class="map-connection-status">
-                  Selecione "Conectar" em duas caixas para criar uma corda.
-                </span>
-                <label>
-                  Modo
-                  <select id="noteSketchMode">
-                    <option value="pen">Caneta</option>
-                    <option value="eraser">Borracha</option>
-                  </select>
-                </label>
-                <label>
-                  Cor
-                  <input id="noteSketchColor" type="color" value="#1d4ed8" />
-                </label>
-                <label>
-                  Espessura
-                  <input id="noteSketchSize" type="range" min="2" max="20" value="4" />
-                </label>
-                <button id="saveNoteSketch" type="button">Salvar rabisco</button>
-                <button id="clearNoteSketch" class="ghost-button" type="button">Limpar rabisco</button>
-                <button id="zoomOutMap" class="ghost-button" type="button">Zoom -</button>
-                <button id="zoomInMap" class="ghost-button" type="button">Zoom +</button>
-                <button id="resetMapZoom" class="ghost-button" type="button">Zoom 100%</button>
-                <button id="toggleMapFullscreen" class="ghost-button" type="button">Tela cheia</button>
-              </div>
-
-              <div class="map-stage-shell">
-                <div id="mapStage" class="map-stage">
-                  <div id="mapViewport" class="map-viewport">
-                    <div id="mapPlane" class="map-plane">
-                      <svg id="mapConnections" class="map-connections"></svg>
-                      <canvas id="mapSketchCanvas" class="map-sketch-canvas"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <aside class="notes-panel">
-              <div class="notes-panel-card">
-                <div class="notes-editor-toolbar">
-                  <button class="ghost-button format-action" type="button" data-command="bold">Negrito</button>
-                  <button class="ghost-button format-action" type="button" data-command="italic">Italico</button>
-                  <button class="ghost-button format-action" type="button" data-command="underline">Sublinhado</button>
-                  <button class="ghost-button format-action" type="button" data-command="hiliteColor" data-value="#fde68a">Grifar</button>
-                </div>
-
-                <div class="notes-editor-controls">
-                  <input id="noteTitle" type="text" placeholder="Titulo da anotacao" />
-                  <select id="noteFontFamily">
-                    <option value="Cambria Math">Cambria Math</option>
-                    <option value="Arial">Arial</option>
-                  </select>
-                  <input id="noteFontSize" type="number" min="12" max="40" value="18" />
-                </div>
-
-                <div
-                  id="noteEditor"
-                  class="note-editor"
-                  contenteditable="true"
-                  spellcheck="true"
-                  data-placeholder="Escreva a anotacao do conteudo aqui..."
-                ></div>
-
-                <div class="notes-editor-actions">
-                  <button id="saveSubjectNote" type="button">Salvar anotacao</button>
-                </div>
-
-                <div class="subject-notes-header">
-                  <p class="eyebrow">Anotacoes salvas</p>
-                  <h4>Indice lateral</h4>
-                </div>
-                <div id="subjectNotesList" class="subject-notes-list"></div>
-              </div>
-            </aside>
-          </div>
+          <p>
+            Se a pagina nao mudar sozinha, clique em
+            <a href="../Mat%C3%A9ria%20e%20assunto/index.html">ir para materia e assunto</a>.
+          </p>
         </section>
       </main>
     </div>
-
-    <script src="../scripts/app.js"></script>
   </body>
 </html>

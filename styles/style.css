@@ -822,6 +822,32 @@ textarea {
   flex-wrap: wrap;
 }
 
+.organizer-panel {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.organizer-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.organizer-actions select,
+.organizer-actions input {
+  min-width: 180px;
+  flex: 1 1 180px;
+}
+
+.text-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .topic-actions select,
 .topic-actions input {
   min-width: 180px;

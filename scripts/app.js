@@ -138,6 +138,7 @@ const ui = {
   newTopicName: document.querySelector("#newTopicName"),
   addSubjectTopic: document.querySelector("#addSubjectTopic"),
   deleteSubjectTopic: document.querySelector("#deleteSubjectTopic"),
+  goToSelectedTopic: document.querySelector("#goToSelectedTopic"),
   mapNodeTitle: document.querySelector("#mapNodeTitle"),
   mapNodeColor: document.querySelector("#mapNodeColor"),
   addMapNode: document.querySelector("#addMapNode"),
@@ -193,6 +194,8 @@ let resizingMapNode = null;
 const DEFAULT_TOPIC_ID = "geral";
 const DEFAULT_MAP_WIDTH = 2800;
 const DEFAULT_MAP_HEIGHT = 1800;
+
+applyLibrarySelectionFromUrl();
 
 if (ui.journalDate) {
   ui.journalDate.value = formatDateInput(new Date());
@@ -324,7 +327,7 @@ function attachEvents() {
     state.noteLibrary.activeSubjectKey = key;
     pendingConnectionSourceId = null;
     ui.otherSubjectName.value = "";
-    renderNotesLibrary();
+    renderLibrarySelectionView();
     saveState();
     });
   }
@@ -335,7 +338,7 @@ function attachEvents() {
     subjectState.activeTopicId = ui.subjectTopicSelect.value;
     activeMapNodeId = null;
     pendingConnectionSourceId = null;
-    renderNotesLibrary();
+    renderLibrarySelectionView();
     saveState();
     });
   }
@@ -362,7 +365,7 @@ function attachEvents() {
     ui.newTopicName.value = "";
     activeMapNodeId = null;
     pendingConnectionSourceId = null;
-    renderNotesLibrary();
+    renderLibrarySelectionView();
     saveState();
     });
   }
@@ -379,8 +382,17 @@ function attachEvents() {
       subjectState.activeTopicId = subjectState.topics[0].id;
       activeMapNodeId = null;
       pendingConnectionSourceId = null;
-      renderNotesLibrary();
+      renderLibrarySelectionView();
       saveState();
+    });
+  }
+
+  if (ui.goToSelectedTopic) {
+    ui.goToSelectedTopic.addEventListener("click", () => {
+      const topic = getActiveTopicState();
+      const subjectParam = encodeURIComponent(state.noteLibrary.activeSubjectKey);
+      const topicParam = encodeURIComponent(topic.id);
+      window.location.href = `../Anota%C3%A7%C3%A3o%20e%20mapa/index.html?subject=${subjectParam}&topic=${topicParam}`;
     });
   }
 
@@ -519,6 +531,18 @@ function attachEvents() {
     }
     saveState();
   });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      if (canvas) {
+        saveCanvasForCurrentMonth();
+      }
+      if (mapSketchCanvas) {
+        saveMapSketch();
+      }
+      saveState();
+    }
+  });
 }
 
 function renderAll() {
@@ -537,10 +561,21 @@ function renderAll() {
   if (ui.videoLibrary) {
     renderVideos();
   }
+  if (ui.subjectTopicSelect && !ui.mapPlane) {
+    renderOrganizerPage();
+  }
   if (ui.mapPlane && ui.subjectNotesList) {
     renderNotesLibrary();
   }
   updateSummary();
+}
+
+function renderOrganizerPage() {
+  renderSubjectCategory("humanas", ui.humanasSubjects);
+  renderSubjectCategory("exatas", ui.exatasSubjects);
+  renderSubjectCategory("outras", ui.outrasSubjects);
+  renderTopicSelector();
+  updateOrganizerMeta();
 }
 
 function renderCalendar() {
@@ -682,7 +717,7 @@ function saveCanvasForCurrentMonth() {
   if (!canvas) {
     return;
   }
-  state.canvasByMonth[getMonthKey()] = canvas.toDataURL("image/png");
+  state.canvasByMonth[getMonthKey()] = snapshotCanvasData(canvas, canvas.clientWidth, canvas.clientHeight);
   saveState();
 }
 
@@ -972,6 +1007,7 @@ function renderTopicSelector() {
   if (ui.deleteSubjectTopic) {
     ui.deleteSubjectTopic.disabled = subjectState.topics.length <= 1;
   }
+  updateOrganizerMeta();
 }
 
 function renderSubjectCategory(category, container) {
@@ -995,11 +1031,25 @@ function renderSubjectCategory(category, container) {
       state.noteLibrary.activeSubjectKey = key;
       activeMapNodeId = null;
       pendingConnectionSourceId = null;
-      renderNotesLibrary();
+      if (ui.mapPlane && ui.subjectNotesList) {
+        renderNotesLibrary();
+      } else {
+        renderOrganizerPage();
+      }
       saveState();
     });
     container.appendChild(button);
   });
+}
+
+function updateOrganizerMeta() {
+  if (!ui.activeSubjectTitle || !ui.activeSubjectMeta) {
+    return;
+  }
+  const subject = getActiveSubject();
+  const topic = getActiveTopicState();
+  ui.activeSubjectTitle.textContent = subject.subject;
+  ui.activeSubjectMeta.textContent = `${noteCategoryLabels[subject.category]} • assunto ativo: ${topic.name}`;
 }
 
 function renderMapWorkspace() {
@@ -1574,7 +1624,11 @@ function saveMapSketch() {
     return;
   }
   const topicState = getActiveTopicState();
-  topicState.sketch = mapSketchCanvas.toDataURL("image/png");
+  topicState.sketch = snapshotCanvasData(
+    mapSketchCanvas,
+    getActiveTopicState().mapSize.width,
+    getActiveTopicState().mapSize.height
+  );
   saveState();
 }
 
@@ -1651,6 +1705,20 @@ function formatDateLong(dateString) {
 
 function sanitizeText(value) {
   return value || "Sem registro";
+}
+
+function snapshotCanvasData(sourceCanvas, width, height) {
+  try {
+    const scale = 0.5;
+    const exportCanvas = document.createElement("canvas");
+    exportCanvas.width = Math.max(1, Math.round(width * scale));
+    exportCanvas.height = Math.max(1, Math.round(height * scale));
+    const exportCtx = exportCanvas.getContext("2d");
+    exportCtx.drawImage(sourceCanvas, 0, 0, exportCanvas.width, exportCanvas.height);
+    return exportCanvas.toDataURL("image/webp", 0.72);
+  } catch (error) {
+    return sourceCanvas.toDataURL("image/png");
+  }
 }
 
 function readStoredState() {
@@ -1900,6 +1968,17 @@ function getActiveTopicState() {
   );
 }
 
+function renderLibrarySelectionView() {
+  if (ui.mapPlane && ui.subjectNotesList) {
+    renderNotesLibrary();
+    return;
+  }
+
+  if (ui.subjectTopicSelect) {
+    renderOrganizerPage();
+  }
+}
+
 function createConnection(fromId, toId) {
   const topicState = getActiveTopicState();
   const exists = areNodesConnected(fromId, toId);
@@ -2011,6 +2090,27 @@ function createTopicId(subjectState, name) {
     suffix += 1;
   }
   return candidate;
+}
+
+function applyLibrarySelectionFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const subjectKey = params.get("subject");
+    const topicId = params.get("topic");
+
+    if (subjectKey && state.noteLibrary.subjects[subjectKey]) {
+      state.noteLibrary.activeSubjectKey = subjectKey;
+    }
+
+    if (topicId) {
+      const subjectState = getActiveSubjectState();
+      if (subjectState.topics.some((topic) => topic.id === topicId)) {
+        subjectState.activeTopicId = topicId;
+      }
+    }
+  } catch (error) {
+    console.warn("Nao foi possivel aplicar a selecao da URL.", error);
+  }
 }
 
 function normalizeJournalFields(fields) {

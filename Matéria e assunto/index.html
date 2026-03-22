@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stude! | Materia e Assunto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Organizacao</p>
+          <h1>Materia e assunto</h1>
+          <p class="sidebar-copy">
+            Escolha a materia, organize os assuntos e entre no mapa certo para estudar.
+          </p>
+        </div>
+        <nav class="section-nav" aria-label="Navegacao do site">
+          <a href="../index.html">Inicio</a>
+          <a href="../Calendario/index.html">Calendario</a>
+          <a href="../Atividades/index.html">Atividades</a>
+          <a href="../Diario/index.html">Diario</a>
+          <a href="../Biblioteca%20de%20Feynman/index.html">Feynman</a>
+          <a href="../Anota%C3%A7%C3%A3o%20e%20mapa/index.html">Mapa e anotacao</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section class="welcome-banner">
+          <p>Primeiro organize. Depois mergulhe no assunto escolhido.</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Biblioteca</p>
+              <h3>Selecione a materia e o assunto que deseja estudar.</h3>
+            </div>
+          </div>
+
+          <div class="notes-layout">
+            <aside class="notes-sidebar">
+              <div class="notes-sidebar-card">
+                <div class="notes-sidebar-header">
+                  <div>
+                    <p class="eyebrow">Categorias</p>
+                    <h4>Materias</h4>
+                  </div>
+                </div>
+
+                <div class="notes-category">
+                  <button class="notes-category-toggle" type="button" data-category="humanas">Humanas</button>
+                  <div class="notes-subject-list" id="humanasSubjects"></div>
+                </div>
+
+                <div class="notes-category">
+                  <button class="notes-category-toggle" type="button" data-category="exatas">Exatas</button>
+                  <div class="notes-subject-list" id="exatasSubjects"></div>
+                </div>
+
+                <div class="notes-category">
+                  <button class="notes-category-toggle" type="button" data-category="outras">Outras</button>
+                  <div class="notes-subject-list" id="outrasSubjects"></div>
+                  <div class="notes-subject-add">
+                    <input id="otherSubjectName" type="text" placeholder="Nova materia em outras" />
+                    <button id="addOtherSubject" class="ghost-button" type="button">Adicionar</button>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <section class="panel organizer-panel">
+              <div class="topic-bar">
+                <div>
+                  <p class="eyebrow">Materia ativa</p>
+                  <h4 id="activeSubjectTitle">Historia</h4>
+                  <p id="activeSubjectMeta" class="workspace-meta">Humanas • assunto ativo: Geral</p>
+                </div>
+                <div>
+                  <p class="eyebrow">Assunto ativo</p>
+                  <strong id="activeTopicTitle">Geral</strong>
+                </div>
+              </div>
+
+              <div class="organizer-actions">
+                <select id="subjectTopicSelect"></select>
+                <input id="newTopicName" type="text" placeholder="Novo assunto" />
+                <button id="addSubjectTopic" class="ghost-button" type="button">Criar assunto</button>
+                <button id="deleteSubjectTopic" class="ghost-button" type="button">Excluir assunto</button>
+                <button id="goToSelectedTopic" type="button">Ir para o assunto selecionado</button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../scripts/app.js"></script>
+  </body>
+</html>
